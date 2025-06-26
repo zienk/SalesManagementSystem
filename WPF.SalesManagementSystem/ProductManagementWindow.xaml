@@ -7,15 +7,16 @@
         mc:Ignorable="d"
         Title="ProductManagementWindow" Height="450" Width="800">
     <Grid>
-        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="34,68,277,217">
+        <ListView x:Name="lvProduct" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="34,35,40,250" SelectionChanged="lvProduct_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID"
+                                    Width="30"
                                     DisplayMemberBinding="{Binding ProductId}"/>
                     <GridViewColumn Header="Name"
                                     DisplayMemberBinding="{Binding ProductName}"/>
                     <GridViewColumn Header="Category"
-                                    DisplayMemberBinding="{Binding Category}"/>
+                                    DisplayMemberBinding="{Binding Category.CategoryName}"/>
                     <GridViewColumn Header="QuantityPerUnit"
                                     DisplayMemberBinding="{Binding QuantityPerUnit}"/>
                     <GridViewColumn Header="Price"
@@ -25,10 +26,25 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
-        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="34,249,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="106,249,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,-0.163"/>
-        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="187,249,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="163,366,0,0" VerticalAlignment="Top" Click="btnCreate_Click"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="218,366,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,-0.163" Click="btnUpdate_Click"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="697,197,0,0" VerticalAlignment="Top" Click="btnDelete_Click"/>
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="65,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" Height="20"/>
+        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="458,10,0,0" VerticalAlignment="Top" Click="btnSearch_Click"/>
+
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="39,194,0,0" VerticalAlignment="Top"/>
+        <Label Content="Category:" HorizontalAlignment="Left" Margin="39,225,0,0" VerticalAlignment="Top"/>
+        <Label Content="QuantityPerUnit:" HorizontalAlignment="Left" Margin="39,256,0,0" VerticalAlignment="Top"/>
+        <Label Content="Price:" HorizontalAlignment="Left" Margin="39,287,0,0" VerticalAlignment="Top"/>
+        <Label Content="Quantity:" HorizontalAlignment="Left" Margin="39,318,0,0" VerticalAlignment="Top"/>
+
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="141,198,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
+        <TextBox x:Name="txtQpu" HorizontalAlignment="Left" Margin="141,260,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="141,291,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
+        <TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Margin="141,322,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
+        <ComboBox x:Name="cboCategory" HorizontalAlignment="Left" Margin="141,227,0,0" VerticalAlignment="Top" Width="162"
+                  DisplayMemberPath="CategoryName" SelectedValuePath="CategoryId"/>
 
     </Grid>
 </Window>

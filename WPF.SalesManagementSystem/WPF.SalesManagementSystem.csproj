@@ -18,4 +18,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Remove="ProductDialog.xaml" />
+  </ItemGroup>
+
 </Project>

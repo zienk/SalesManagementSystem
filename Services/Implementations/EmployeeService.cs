@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using Repositories.Implementations;
+using Repositories.Interfaces;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Services.Implementations
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly EmployeeRepository _employeeRepo;
+        private readonly IEmployeeRepository _employeeRepo;
 
         public EmployeeService()
         {

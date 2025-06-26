@@ -11,7 +11,9 @@ namespace Repositories.Interfaces
     {
         public bool CreateProduct(Product product);
         public List<Product> GetAllProducts();
+        public Product? GetProductById(int productId);
         public bool UpdateProduct(Product product);
         public bool DeleteProduct(int productId);
+        public List<Product> SearchProduct(string searchText);
     }
 }
