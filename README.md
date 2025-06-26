@@ -77,10 +77,6 @@ SalesManagementSystem/
 Chúng tôi hoan nghênh mọi đóng góp!  
 Vui lòng tạo issue hoặc pull request nếu bạn muốn đề xuất tính năng, sửa lỗi hoặc cải thiện tài liệu.
 
-## 📄 License
-
-Dự án này sử dụng [MIT License](LICENSE) (hoặc cập nhật theo license thực tế của bạn).
-
 ## 💬 Liên hệ
 
 - Tác giả: Nguyễn Ngọc Viên
