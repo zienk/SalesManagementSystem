@@ -1,8 +1,8 @@
-﻿<Application x:Class="SalesManagementSystem.App"
+﻿<Application x:Class="WPF.SalesManagementSystem.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SalesManagementSystem"
-             StartupUri="LoginView.xaml">
+             xmlns:local="clr-namespace:WPF.SalesManagementSystem"
+             StartupUri="LoginWindow.xaml">
     <Application.Resources>
          
     </Application.Resources>
