@@ -1,4 +1,5 @@
-﻿using Services.Implementations;
+﻿using DataAccessLayer.Entities;
+using Services.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,16 @@ namespace WPF.SalesManagementSystem
     public partial class LoginWindow : Window
     {
         private readonly EmployeeService _employeeService;
+        private readonly CustomerService _customerService;
 
         public LoginWindow()
         {
             InitializeComponent();
             _employeeService = new EmployeeService();
+            _customerService = new CustomerService();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void btnEmployeeLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Password.Trim();
@@ -37,16 +40,32 @@ namespace WPF.SalesManagementSystem
 
             if (employee != null)
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
+                EmployeeMainWindow employeeMainWindow = new EmployeeMainWindow(employee);
+                employeeMainWindow.Show();
                 this.Close();
             }
             else
             {
                 MessageBox.Show("Invalid username or password.", "Login failed!");
             }
-
         }
 
+        private void btnCustomerLogin_Click(object sender, RoutedEventArgs e)
+        {
+            string phone = txtPhone.Text.Trim();
+
+            var customer = _customerService.GetCustomerByPhone(phone);
+
+            if (customer != null)
+            {
+                CustomerMainWindow customerMainWindow = new CustomerMainWindow(customer);
+                customerMainWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid phone number.", "Login failed!");
+            }
+        }
     }
 }

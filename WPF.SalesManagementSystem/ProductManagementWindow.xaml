@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="ProductManagementWindow" Height="450" Width="800">
     <Grid>
+
+        <TextBlock x:Name="txtWelcome" HorizontalAlignment="Left" Margin="478,322,0,0" TextWrapping="Wrap" Text="Welcome" VerticalAlignment="Top" FontSize="20" Foreground="#FFCC3863"/>
+
         <ListView x:Name="lvProduct" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="34,35,40,250" SelectionChanged="lvProduct_SelectionChanged">
             <ListView.View>
                 <GridView>
@@ -45,6 +48,7 @@
         <TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Margin="141,322,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
         <ComboBox x:Name="cboCategory" HorizontalAlignment="Left" Margin="141,227,0,0" VerticalAlignment="Top" Width="162"
                   DisplayMemberPath="CategoryName" SelectedValuePath="CategoryId"/>
+        <Button x:Name="btnBack" Content="Back" HorizontalAlignment="Left" Margin="488,260,0,0" VerticalAlignment="Top" Height="33" Width="61" Click="btnBack_Click"/>
 
     </Grid>
 </Window>

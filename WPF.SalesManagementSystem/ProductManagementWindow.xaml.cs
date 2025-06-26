@@ -25,14 +25,20 @@ namespace WPF.SalesManagementSystem
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
 
-        public ProductManagementWindow()
+        private Employee _loggedInEmployee;
+
+        public ProductManagementWindow(Employee loggedInEmployee)
         {
             InitializeComponent();
+
+            _loggedInEmployee = loggedInEmployee;
+            txtWelcome.Text = $"Welcome, {_loggedInEmployee.JobTitle}: {_loggedInEmployee.Name} !";
 
             _productService = new ProductService();
             _categoryService = new CategoryService();
             LoadProducts();
             LoadCategories();
+            
         }
 
         private void LoadCategories()
@@ -184,6 +190,13 @@ namespace WPF.SalesManagementSystem
             txtPrice.Text = product.UnitPrice.ToString();
             txtQuantity.Text = product.UnitsInStock.ToString();
 
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(_loggedInEmployee);
+            mainWindow.Show();
+            this.Close();
         }
     }
 }

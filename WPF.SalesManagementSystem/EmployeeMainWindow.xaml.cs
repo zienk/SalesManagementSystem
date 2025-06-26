@@ -13,13 +13,13 @@ using System.Windows.Shapes;
 namespace WPF.SalesManagementSystem
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EmployeeMainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EmployeeMainWindow : Window
     {
         private Employee _loggedInEmployee;
 
-        public MainWindow(Employee employee)
+        public EmployeeMainWindow(Employee employee)
         {
             InitializeComponent();
 

@@ -5,13 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.SalesManagementSystem"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="295" Width="342">
+        Title="Login" Height="350" Width="400">
     <Grid>
-        <Label Content="Username:" HorizontalAlignment="Left" Margin="42,78,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.279,1.342"/>
-        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Margin="113,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Password:" HorizontalAlignment="Left" Margin="42,156,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.747,3.183"/>
-        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="113,160,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Left" Margin="173,197,0,0" VerticalAlignment="Top" Click="btnLogin_Click"/>
-
+        <TabControl Margin="10">
+            <TabItem Header="Employee Login">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Username:" HorizontalAlignment="Left" Margin="42,50,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Margin="120,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180"/>
+                    <Label Content="Password:" HorizontalAlignment="Left" Margin="42,100,0,0" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="120,104,0,0" VerticalAlignment="Top" Width="180"/>
+                    <Button x:Name="btnEmployeeLogin" Content="Login" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="100" Click="btnEmployeeLogin_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Customer Login">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Phone Number:" HorizontalAlignment="Left" Margin="42,80,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Margin="140,84,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180"/>
+                    <Button x:Name="btnCustomerLogin" Content="Login" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="100" Click="btnCustomerLogin_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
