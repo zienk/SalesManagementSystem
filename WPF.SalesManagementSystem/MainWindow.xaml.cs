@@ -51,7 +51,7 @@ namespace WPF.SalesManagementSystem
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
             // Hiển thị thông báo xác nhận đăng xuất
-            MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Do you want to logout", "Yes or No?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
