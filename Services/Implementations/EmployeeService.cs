@@ -22,6 +22,9 @@ namespace Services.Implementations
         public Employee? GetEmployee(string username, string password)
         => _employeeRepo.GetEmployee(username, password);
 
-
+        public List<Employee> GetAllEmployees()
+        {
+            return _employeeRepo.GetAllEmployees();
+        }
     }
 }

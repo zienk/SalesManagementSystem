@@ -63,5 +63,19 @@ namespace WPF.SalesManagementSystem
                 this.Close();
             }
         }
+
+        private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
+        {
+            OrderCreateWindow createWindow = new OrderCreateWindow(_loggedInEmployee);
+            createWindow.Show();
+            this.Close();
+        }
+
+        private void btnOrderHistory_Click(object sender, RoutedEventArgs e)
+        {
+            OrderHistoryWindow historyWindow = new OrderHistoryWindow(_loggedInEmployee);
+            historyWindow.Show();
+            this.Close();
+        }
     }
 }

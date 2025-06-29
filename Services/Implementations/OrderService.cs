@@ -50,8 +50,7 @@ namespace Services.Implementations
 
         public List<Order> GetOrdersByEmployeeId(int employeeId)
         {
-            if (employeeId <= 0) return null;
-
+            if (employeeId <= 0) return new List<Order>();
             return _orderRepo.GetOrdersByEmployeeId(employeeId);
         }
 
@@ -68,6 +67,19 @@ namespace Services.Implementations
             if (order == null) return false;
 
             return _orderRepo.UpdateOrder(order);
+        }
+
+        public List<Order> SearchOrdersByEmployeeId(string searchText, int employeeId)
+        {
+            if (string.IsNullOrWhiteSpace(searchText) || employeeId <= 0)
+                return new List<Order>();
+            return _orderRepo.SearchOrdersByEmployeeId(searchText, employeeId);
+        }
+
+        public Order? GetLastOrderOfEmployee(int employeeId, int customerId)
+        {
+            if (employeeId <= 0 || customerId <= 0) return null;
+            return _orderRepo.GetLastOrderOfEmployee(employeeId, customerId);
         }
     }
 }

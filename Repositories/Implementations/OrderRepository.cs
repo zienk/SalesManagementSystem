@@ -58,13 +58,15 @@ namespace Repositories.Implementations
                 .ToList();
 
         public List<Order> GetOrdersByEmployeeId(int employeeId)
-            => _context.Orders
+        {
+            return _context.Orders
                 .Include(o => o.Customer)
                 .Include(o => o.Employee)
                 .Include(o => o.OrderDetails)
                     .ThenInclude(od => od.Product)
                 .Where(o => o.EmployeeId == employeeId)
                 .ToList();
+        }
 
         public List<Order> SearchOrders(string searchText)
         {
@@ -91,6 +93,30 @@ namespace Repositories.Implementations
             _context.SaveChanges();
 
             return true;
+        }
+
+        public List<Order> SearchOrdersByEmployeeId(string searchText, int employeeId)
+        {
+            searchText = searchText.Trim().ToLower();
+            return _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.Employee)
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
+                .Where(o => o.EmployeeId == employeeId &&
+                            (o.Customer.CompanyName.ToLower().Contains(searchText) ||
+                             o.Customer.ContactName.ToLower().Contains(searchText) ||
+                             o.Employee.Name.ToLower().Contains(searchText) ||
+                             o.OrderDetails.Any(od => od.Product.ProductName.ToLower().Contains(searchText))))
+                .ToList();
+        }
+
+        public Order? GetLastOrderOfEmployee(int employeeId, int customerId)
+        {
+            return _context.Orders
+                .Where(o => o.EmployeeId == employeeId && o.CustomerId == customerId)
+                .OrderByDescending(o => o.OrderId)
+                .FirstOrDefault();
         }
     }
 }

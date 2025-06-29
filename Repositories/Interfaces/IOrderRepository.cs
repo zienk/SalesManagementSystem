@@ -17,5 +17,7 @@ namespace Repositories.Interfaces
         public bool DeleteOrder(int orderId);
         public List<Order> SearchOrders(string searchText);
         public List<Order> GetOrdersByEmployeeId(int employeeId);
+        public List<Order> SearchOrdersByEmployeeId(string searchText, int employeeId);
+        public Order? GetLastOrderOfEmployee(int employeeId, int customerId);
     }
 }

@@ -22,5 +22,10 @@ namespace Repositories.Implementations
             var employee = _context.Employees.FirstOrDefault(e => e.UserName == username && e.Password == password);
             return employee;
         }
+
+        public List<Employee> GetAllEmployees()
+        {
+            return _context.Employees.ToList();
+        }
     }
 }

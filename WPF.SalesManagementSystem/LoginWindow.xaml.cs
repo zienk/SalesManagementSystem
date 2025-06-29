@@ -40,8 +40,8 @@ namespace WPF.SalesManagementSystem
 
             if (employee != null)
             {
-                EmployeeMainWindow employeeMainWindow = new EmployeeMainWindow(employee);
-                employeeMainWindow.Show();
+                MainWindow mainWindow = new MainWindow(employee);
+                mainWindow.Show();
                 this.Close();
             }
             else
