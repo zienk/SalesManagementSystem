@@ -16,8 +16,10 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Order ID" Width="80" DisplayMemberBinding="{Binding OrderId}"/>
-                    <GridViewColumn Header="Order Date" Width="150" DisplayMemberBinding="{Binding OrderDate}"/>
-                    <GridViewColumn Header="Employee" Width="150" DisplayMemberBinding="{Binding Employee.Name}"/>
+                    <GridViewColumn Header="Product" Width="200" DisplayMemberBinding="{Binding Product.ProductName}"/>
+                    <GridViewColumn Header="Quantity" Width="80" DisplayMemberBinding="{Binding Quantity}"/>
+                    <GridViewColumn Header="TotalPrice" Width="80" DisplayMemberBinding="{Binding TotalPrice}"/>
+                    <GridViewColumn Header="Order Date" Width="150" DisplayMemberBinding="{Binding Order.OrderDate}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -23,6 +23,9 @@ namespace WPF.SalesManagementSystem
     public partial class CustomerMainWindow : Window
     {
         private readonly ICustomerService _customerService;
+        private readonly IOrderService _orderService;
+        private readonly IOrderDetailService _orderDetailService;
+        
         private Customer _loggedInCustomer;
 
         public CustomerMainWindow(Customer customer)
@@ -30,9 +33,14 @@ namespace WPF.SalesManagementSystem
             InitializeComponent();
 
             _loggedInCustomer = customer;
+
             _customerService = new CustomerService();
 
-            txtWelcome.Text = $"Welcome, {_loggedInCustomer.CompanyName}!";
+            _orderService = new OrderService();
+
+            _orderDetailService = new OrderDetailService();
+
+            txtWelcome.Text = $"Welcome, {_loggedInCustomer.ContactName}!";
 
             // Khởi tạo dữ liệu cho form chỉnh sửa thông tin
             LoadCustomerData();
@@ -54,7 +62,7 @@ namespace WPF.SalesManagementSystem
             lvOrders.Visibility = Visibility.Visible;
 
             // Lấy danh sách đơn hàng của khách hàng
-            lvOrders.ItemsSource = _loggedInCustomer.Orders.ToList();
+            lvOrders.ItemsSource = _orderDetailService.GetOrderDetailsByCustomerId(_loggedInCustomer.CustomerId);
         }
 
         private void btnEditProfile_Click(object sender, RoutedEventArgs e)

@@ -29,10 +29,9 @@ namespace Services.Implementations
             return _productRepo.CreateProduct(product);
         }
 
-        public List<Product> GetAllProducts()
-        {
-            return _productRepo.GetAllProducts();
-        }
+        public List<Product> GetAllProducts()      
+            => _productRepo.GetAllProducts();
+        
 
         public Product? GetProductById(int productId)
         {
