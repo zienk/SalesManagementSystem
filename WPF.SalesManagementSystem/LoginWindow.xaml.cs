@@ -67,5 +67,10 @@ namespace WPF.SalesManagementSystem
                 MessageBox.Show("Invalid phone number.", "Login failed!");
             }
         }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

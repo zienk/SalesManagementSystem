@@ -5,25 +5,377 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.SalesManagementSystem"
         mc:Ignorable="d"
-        Title="Login" Height="350" Width="400">
-    <Grid>
-        <TabControl Margin="10">
-            <TabItem Header="Employee Login">
-                <Grid Background="#FFE5E5E5">
-                    <Label Content="Username:" HorizontalAlignment="Left" Margin="42,50,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Margin="120,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180"/>
-                    <Label Content="Password:" HorizontalAlignment="Left" Margin="42,100,0,0" VerticalAlignment="Top"/>
-                    <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="120,104,0,0" VerticalAlignment="Top" Width="180"/>
-                    <Button x:Name="btnEmployeeLogin" Content="Login" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="100" Click="btnEmployeeLogin_Click"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Customer Login">
-                <Grid Background="#FFE5E5E5">
-                    <Label Content="Phone Number:" HorizontalAlignment="Left" Margin="42,80,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Margin="140,84,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180"/>
-                    <Button x:Name="btnCustomerLogin" Content="Login" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="100" Click="btnCustomerLogin_Click"/>
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+        Title="Sales Management System - Login" 
+        Height="528" Width="450" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None">
+
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF4A90E2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF357ABD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF2968A3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern TextBox Style - FIXED -->
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="FontSize" Value="14"/>
+
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CaretBrush" Value="#FF4A90E2"/>
+            <Setter Property="SelectionBrush" Value="#FF4A90E2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Focusable="false" 
+                                        HorizontalScrollBarVisibility="Hidden" 
+                                        VerticalScrollBarVisibility="Hidden"
+                                        VerticalAlignment="Center"
+                                        Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF4A90E2"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFB0B0B0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern PasswordBox Style - FIXED -->
+        <Style x:Key="ModernPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="#FFE0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CaretBrush" Value="#FF4A90E2"/>
+            <Setter Property="SelectionBrush" Value="#FF4A90E2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Focusable="false" 
+                                        HorizontalScrollBarVisibility="Hidden" 
+                                        VerticalScrollBarVisibility="Hidden"
+                                        VerticalAlignment="Center"
+                                        Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF4A90E2"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFB0B0B0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern TabControl Style -->
+        <Style x:Key="ModernTabControlStyle" TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <!-- Modern TabItem Style -->
+        <Style x:Key="ModernTabItemStyle" TargetType="TabItem">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#FF666666"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Border" 
+                                Background="Transparent"
+                                BorderThickness="0,0,0,3"
+                                BorderBrush="Transparent"
+                                Margin="0,0,20,0">
+                            <ContentPresenter x:Name="ContentSite"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            ContentSource="Header"
+                                            Margin="20,10"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF4A90E2"/>
+                                <Setter Property="Foreground" Value="#FF4A90E2"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#FF4A90E2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Main Container with Shadow Effect -->
+    <Border Background="White" 
+            CornerRadius="15"
+            Margin="10">
+        <Border.Effect>
+            <DropShadowEffect Color="#FFB0B0B0" 
+                            Direction="270" 
+                            ShadowDepth="8" 
+                            Opacity="0.3" 
+                            BlurRadius="20"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header Section -->
+            <Grid Grid.Row="0" Background="#FF4A90E2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title -->
+                <TextBlock Grid.Row="0"
+                          Text="SALES MANAGEMENT" 
+                          Foreground="White" 
+                          FontSize="20" 
+                          FontWeight="Bold" 
+                          HorizontalAlignment="Center" 
+                          VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="1"
+                          Text="Login to your account" 
+                          Foreground="#FFE8F4FD" 
+                          FontSize="12" 
+                          HorizontalAlignment="Center" 
+                          Margin="0,0,0,10"/>
+            </Grid>
+
+            <!-- Content Section -->
+            <Grid Grid.Row="1" Margin="30,20,30,30">
+                <TabControl Style="{StaticResource ModernTabControlStyle}">
+                    <!-- Employee Login Tab -->
+                    <TabItem Header="Employee Login" Style="{StaticResource ModernTabItemStyle}">
+                        <Grid Margin="0,30,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Username Field -->
+                            <TextBlock Grid.Row="0" 
+                                     Text="Username" 
+                                     FontSize="14" 
+                                     FontWeight="SemiBold" 
+                                     Foreground="#FF333333" 
+                                     Margin="0,0,0,8"/>
+                            <TextBox x:Name="txtUsername" 
+                                   Grid.Row="2"
+                                   Style="{StaticResource ModernTextBoxStyle}"
+                                   Text=""/>
+
+                            <!-- Password Field -->
+                            <TextBlock Grid.Row="4" 
+                                     Text="Password" 
+                                     FontSize="14" 
+                                     FontWeight="SemiBold" 
+                                     Foreground="#FF333333" 
+                                     Margin="0,0,0,8"/>
+                            <PasswordBox x:Name="txtPassword" 
+                                       Grid.Row="6"
+                                       Style="{StaticResource ModernPasswordBoxStyle}"/>
+
+                            <!-- Login and Exit Buttons -->
+                            <Grid Grid.Row="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="btnEmployeeLogin" 
+                                      Grid.Column="0"
+                                      Content="LOGIN" 
+                                      Style="{StaticResource ModernButtonStyle}"
+                                      Click="btnEmployeeLogin_Click"/>
+
+                                <Button x:Name="btnEmployeeExit" 
+                                      Grid.Column="2"
+                                      Content="EXIT" 
+                                      Height="45"
+                                      FontSize="14"
+                                      FontWeight="SemiBold"
+                                      Background="#FFFF4757"
+                                      Foreground="White"
+                                      BorderThickness="0"
+                                      Cursor="Hand"
+                                      Click="btnExit_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" 
+                                                    CornerRadius="8"
+                                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#FFFF3838"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#FFE63946"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Customer Login Tab -->
+                    <TabItem Header="Customer Login" Style="{StaticResource ModernTabItemStyle}">
+                        <Grid Margin="0,30,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Phone Field -->
+                            <TextBlock Grid.Row="0" 
+                                     Text="Phone Number" 
+                                     FontSize="14" 
+                                     FontWeight="SemiBold" 
+                                     Foreground="#FF333333" 
+                                     Margin="0,0,0,8"/>
+                            <TextBox x:Name="txtPhone" 
+                                   Grid.Row="2"
+                                   Style="{StaticResource ModernTextBoxStyle}"
+                                   Text=""/>
+
+                            <!-- Info Text -->
+                            <TextBlock Grid.Row="4"
+                                     Text="Enter your registered phone number to continue"
+                                     FontSize="12"
+                                     Foreground="#FF888888"
+                                     TextAlignment="Center"
+                                     TextWrapping="Wrap"/>
+
+                            <!-- Login and Exit Buttons -->
+                            <Grid Grid.Row="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="btnCustomerLogin" 
+                                      Grid.Column="0"
+                                      Content="LOGIN" 
+                                      Style="{StaticResource ModernButtonStyle}"
+                                      Click="btnCustomerLogin_Click"/>
+
+                                <Button x:Name="btnCustomerExit" 
+                                      Grid.Column="2"
+                                      Content="EXIT" 
+                                      Height="45"
+                                      FontSize="14"
+                                      FontWeight="SemiBold"
+                                      Background="#FFFF4757"
+                                      Foreground="White"
+                                      BorderThickness="0"
+                                      Cursor="Hand"
+                                      Click="btnExit_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" 
+                                                    CornerRadius="8"
+                                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#FFFF3838"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#FFE63946"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>
