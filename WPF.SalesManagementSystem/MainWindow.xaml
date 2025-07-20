@@ -5,14 +5,348 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.SalesManagementSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="513" Width="378">
-    <Grid Margin="0,0,10,-6">
-        <TextBlock x:Name="txtWelcome" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Welcome" VerticalAlignment="Top" FontSize="20" Foreground="#FFCC3863"/>
-        <Button x:Name="btnManageProducts" Content="Manage Products" HorizontalAlignment="Left" Margin="19,54,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnManageProducts_Click"/>
-        <Button x:Name="btnManageCustomers" Content="Manage Customers" HorizontalAlignment="Left" Margin="19,141,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnManageCustomers_Click"/>
-        <Button x:Name="btnCreateOrder" Content="Create Order" HorizontalAlignment="Left" Margin="19,228,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnCreateOrder_Click"/>
-        <Button x:Name="btnOrderHistory" Content="Order History" HorizontalAlignment="Left" Margin="19,315,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnOrderHistory_Click"/>
-        <Button x:Name="btnLogout" Content="Logout" HorizontalAlignment="Left" Margin="19,402,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnLogout_Click"/>
+        Title="Sales Management System" 
+        Height="700" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F6FA">
 
+    <Window.Resources>
+        <!-- Button Style -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4A90E2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#357ABD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2E6BA8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#E0E0E0" 
+                                    Direction="270" 
+                                    ShadowDepth="3" 
+                                    BlurRadius="10" 
+                                    Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50">
+            <Grid>
+                <TextBlock 
+                          Text="Sales Management Dashboard" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center" 
+                          Margin="30,0,0,0"
+                          FontSize="24" 
+                          FontWeight="Bold"
+                          Foreground="White"/>
+
+                <StackPanel Orientation="Horizontal" 
+                          HorizontalAlignment="Right" 
+                          VerticalAlignment="Center" 
+                          Margin="0,0,30,0">
+                    <TextBlock Name="txtWelcome" Text="Welcome, Admin" 
+                             Foreground="#BDC3C7" 
+                             FontSize="14" 
+                             VerticalAlignment="Center" 
+                             Margin="0,0,15,0"/>
+                    <Ellipse Width="40" Height="40" Fill="#4A90E2">
+                        <Ellipse.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="5" Opacity="0.2"/>
+                        </Ellipse.Effect>
+                    </Ellipse>
+                    <TextBlock Text="A" 
+                             HorizontalAlignment="Center" 
+                             VerticalAlignment="Center" 
+                             Foreground="White" 
+                             FontSize="16" 
+                             FontWeight="Bold" 
+                             Margin="-32,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel - Navigation Cards -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Products Card -->
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📦" 
+                                 FontSize="48" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,20,0,10"/>
+                        <TextBlock Text="Products" 
+                                 FontSize="18" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,0,0,10"/>
+                        <TextBlock Text="Manage your product inventory" 
+                                 FontSize="12" 
+                                 Foreground="#7F8C8D" 
+                                 HorizontalAlignment="Center" 
+                                 TextWrapping="Wrap"
+                                 TextAlignment="Center"
+                                 Margin="10,0,10,15"/>
+                        <Button x:Name="btnManageProducts" 
+                              Content="Manage Products" 
+                              Style="{StaticResource ModernButtonStyle}"
+                              Click="btnManageProducts_Click"
+                              Height="40"
+                              Margin="15,0,15,15"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Customers Card -->
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="👥" 
+                                 FontSize="48" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,20,0,10"/>
+                        <TextBlock Text="Customers" 
+                                 FontSize="18" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,0,0,10"/>
+                        <TextBlock Text="Manage customer information" 
+                                 FontSize="12" 
+                                 Foreground="#7F8C8D" 
+                                 HorizontalAlignment="Center" 
+                                 TextWrapping="Wrap"
+                                 TextAlignment="Center"
+                                 Margin="10,0,10,15"/>
+                        <Button x:Name="btnManageCustomers" 
+                              Content="Manage Customers" 
+                              Style="{StaticResource ModernButtonStyle}"
+                              Click="btnManageCustomers_Click"
+                              Height="40"
+                              Margin="15,0,15,15"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Orders Card -->
+                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🛒" 
+                                 FontSize="48" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,20,0,10"/>
+                        <TextBlock Text="New Order" 
+                                 FontSize="18" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,0,0,10"/>
+                        <TextBlock Text="Create new customer orders" 
+                                 FontSize="12" 
+                                 Foreground="#7F8C8D" 
+                                 HorizontalAlignment="Center" 
+                                 TextWrapping="Wrap"
+                                 TextAlignment="Center"
+                                 Margin="10,0,10,15"/>
+                        <Button x:Name="btnCreateOrder" 
+                              Content="Create Order" 
+                              Style="{StaticResource ModernButtonStyle}"
+                              Click="btnCreateOrder_Click"
+                              Height="40"
+                              Margin="15,0,15,15"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- History Card -->
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📊" 
+                                 FontSize="48" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,20,0,10"/>
+                        <TextBlock Text="Order History" 
+                                 FontSize="18" 
+                                 FontWeight="Bold" 
+                                 HorizontalAlignment="Center" 
+                                 Margin="0,0,0,10"/>
+                        <TextBlock Text="View all order history" 
+                                 FontSize="12" 
+                                 Foreground="#7F8C8D" 
+                                 HorizontalAlignment="Center" 
+                                 TextWrapping="Wrap"
+                                 TextAlignment="Center"
+                                 Margin="10,0,10,15"/>
+                        <Button x:Name="btnOrderHistory" 
+                              Content="View History" 
+                              Style="{StaticResource ModernButtonStyle}"
+                              Click="btnOrderHistory_Click"
+                              Height="40"
+                              Margin="15,0,15,15"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Right Panel - Quick Stats & Actions -->
+            <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Quick Stats -->
+                <Border Grid.Row="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Quick Stats" 
+                                 FontSize="16" 
+                                 FontWeight="Bold" 
+                                 Margin="15,15,15,10"/>
+
+                        <StackPanel Margin="15,5">
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="🟢" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="Total Products:" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="156" FontWeight="Bold" FontSize="11" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="🟡" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="Active Customers:" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="89" FontWeight="Bold" FontSize="11" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="🔵" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="Today's Orders:" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="12" FontWeight="Bold" FontSize="11" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Recent Activity -->
+                <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Recent Activity" 
+                                 FontSize="16" 
+                                 FontWeight="Bold" 
+                                 Margin="15,15,15,10"/>
+
+                        <ScrollViewer Height="200" Margin="15,0,15,15">
+                            <StackPanel>
+                                <Border Background="#ECF0F1" CornerRadius="5" Margin="0,5" Padding="10">
+                                    <StackPanel>
+                                        <TextBlock Text="New order #1234" FontSize="11" FontWeight="Bold"/>
+                                        <TextBlock Text="Customer: John Doe" FontSize="10" Foreground="#7F8C8D"/>
+                                        <TextBlock Text="2 mins ago" FontSize="9" Foreground="#95A5A6"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#ECF0F1" CornerRadius="5" Margin="0,5" Padding="10">
+                                    <StackPanel>
+                                        <TextBlock Text="Product added" FontSize="11" FontWeight="Bold"/>
+                                        <TextBlock Text="Item: Laptop Dell XPS" FontSize="10" Foreground="#7F8C8D"/>
+                                        <TextBlock Text="15 mins ago" FontSize="9" Foreground="#95A5A6"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Background="#ECF0F1" CornerRadius="5" Margin="0,5" Padding="10">
+                                    <StackPanel>
+                                        <TextBlock Text="Customer registered" FontSize="11" FontWeight="Bold"/>
+                                        <TextBlock Text="Name: Jane Smith" FontSize="10" Foreground="#7F8C8D"/>
+                                        <TextBlock Text="1 hour ago" FontSize="9" Foreground="#95A5A6"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Border>
+
+                <!-- Logout Section -->
+                <Border Grid.Row="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <Button x:Name="btnLogout" 
+                              Content="🚪 Logout" 
+                              Background="#E74C3C"
+                              Foreground="White"
+                              BorderThickness="0"
+                              Padding="15,10"
+                              FontSize="14"
+                              FontWeight="SemiBold"
+                              Cursor="Hand"
+                              Click="btnLogout_Click"
+                              Margin="10">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                          CornerRadius="8"
+                                          Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" 
+                                                        VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#C0392B"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Background" Value="#A93226"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

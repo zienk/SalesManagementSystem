@@ -5,57 +5,260 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.SalesManagementSystem"
         mc:Ignorable="d"
-        Title="Order Management" Height="500" Width="900">
+        Title="Order Management" Height="700" Width="1267"
+        WindowStartupLocation="CenterScreen"
+        Background="#F8F9FA">
+
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4A90E2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#357ABD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2E6BA8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Success Button Style -->
+        <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#229954"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1E8449"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Warning Button Style -->
+        <Style x:Key="WarningButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#F39C12"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E67E22"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D35400"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Delete Button Style -->
+        <Style x:Key="DeleteButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#A93226"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#E0E0E0" 
+                                    Direction="270" 
+                                    ShadowDepth="2" 
+                                    BlurRadius="8" 
+                                    Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern TextBox Style -->
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#4A90E2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern ComboBox Style -->
+        <Style x:Key="ModernComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- Modern ListView Style -->
+        <Style x:Key="ModernListViewStyle" TargetType="ListView">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E8E8E8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <TextBlock x:Name="txtWelcome" HorizontalAlignment="Left" Margin="349,271,0,0" TextWrapping="Wrap" Text="Welcome" VerticalAlignment="Top" FontSize="20" Foreground="#FFCC3863" RenderTransformOrigin="-0.211,-0.506"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <ListView x:Name="lvOrder" Margin="27,43,47,242" SelectionChanged="lvOrder_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Order ID" Width="60" DisplayMemberBinding="{Binding OrderId}"/>
-                    <GridViewColumn Header="Customer" Width="120" DisplayMemberBinding="{Binding Customer.CompanyName}"/>
-                    <GridViewColumn Header="Employee" Width="120" DisplayMemberBinding="{Binding Employee.Name}"/>
-                    <GridViewColumn Header="Order Date" Width="120" DisplayMemberBinding="{Binding OrderDate}"/>
-                    <GridViewColumn Header="Total Amount" Width="100" DisplayMemberBinding="{Binding TotalAmount}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50">
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                    <TextBlock Text="🛠️" FontSize="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="Order Management" FontSize="24" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button x:Name="btnBack" Content="← Back" Style="{StaticResource ModernButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0" Click="btnBack_Click"/>
+            </Grid>
+        </Border>
 
-        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="168,395,0,0" VerticalAlignment="Top" Click="btnCreate_Click"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="232,395,0,0" VerticalAlignment="Top" Click="btnUpdate_Click"/>
-        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="755,260,0,0" VerticalAlignment="Top" Click="btnDelete_Click"/>
-        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="65,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" Height="20"/>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="458,10,0,0" VerticalAlignment="Top" Click="btnSearch_Click"/>
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Content="Customer:" HorizontalAlignment="Left" Margin="31,258,0,0" VerticalAlignment="Top"/>
-        <Label Content="Employee:" HorizontalAlignment="Left" Margin="31,289,0,0" VerticalAlignment="Top"/>
-        <Label Content="Order Date:" HorizontalAlignment="Left" Margin="31,320,0,0" VerticalAlignment="Top"/>
+            <!-- Left Panel - Order List -->
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-        <ComboBox x:Name="cboCustomer" HorizontalAlignment="Left" Margin="133,262,0,0" VerticalAlignment="Top" Width="162"
-                  DisplayMemberPath="CompanyName" SelectedValuePath="CustomerId"/>
-        <TextBlock x:Name="txtEmployeeName" HorizontalAlignment="Left" Margin="133,293,0,0" VerticalAlignment="Top" Width="162"/>
-        <DatePicker x:Name="dpOrderDate" HorizontalAlignment="Left" Margin="133,324,0,0" VerticalAlignment="Top" Width="162"/>
+                    <!-- Title -->
+                    <TextBlock Grid.Row="0" Text="Order List" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
 
-        <!-- Bổ sung chọn sản phẩm và nhập số lượng -->
-        <Label Content="Product:" HorizontalAlignment="Left" Margin="31,359,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cboProduct" HorizontalAlignment="Left" Margin="133,363,0,0" VerticalAlignment="Top" Width="162"
-                  DisplayMemberPath="ProductName" SelectedValuePath="ProductId"/>
-        <Label Content="Quantity:" HorizontalAlignment="Left" Margin="320,410,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Margin="390,414,0,0" VerticalAlignment="Top" Width="60"/>
-        <Button x:Name="btnAddProduct" Content="Add Product" HorizontalAlignment="Left" Margin="470,414,0,0" VerticalAlignment="Top" Width="90" Click="btnAddProduct_Click"/>
+                    <!-- Search Section -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
+                        <TextBox x:Name="txtSearch" Style="{StaticResource ModernTextBoxStyle}" Width="300" Height="35" VerticalContentAlignment="Center" FontSize="12"/>
+                        <Button x:Name="btnSearch" Content="🔍 Search" Style="{StaticResource ModernButtonStyle}" Height="35" Margin="10,0,0,0" Click="btnSearch_Click"/>
+                    </StackPanel>
 
-        <!-- ListView hiển thị các sản phẩm đã chọn cho đơn hàng mới -->
-        <ListView x:Name="lvOrderDetails" Margin="600,313,40,40" Height="120">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Product" Width="120" DisplayMemberBinding="{Binding ProductName}"/>
-                    <GridViewColumn Header="Quantity" Width="60" DisplayMemberBinding="{Binding Quantity}"/>
-                    <GridViewColumn Header="Unit Price" Width="80" DisplayMemberBinding="{Binding UnitPrice}"/>
-                    <GridViewColumn Header="Total Price" Width="100" DisplayMemberBinding="{Binding TotalPrice}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                    <!-- Order ListView -->
+                    <ListView x:Name="lvOrder" Grid.Row="2" Style="{StaticResource ModernListViewStyle}" SelectionChanged="lvOrder_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Order ID" Width="70" DisplayMemberBinding="{Binding OrderId}"/>
+                                <GridViewColumn Header="Customer" Width="150" DisplayMemberBinding="{Binding Customer.CompanyName}"/>
+                                <GridViewColumn Header="Employee" Width="150" DisplayMemberBinding="{Binding Employee.Name}"/>
+                                <GridViewColumn Header="Order Date" Width="120" DisplayMemberBinding="{Binding OrderDate}"/>
+                                <GridViewColumn Header="Total Amount" Width="100" DisplayMemberBinding="{Binding TotalAmount}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
-        <Button x:Name="btnBack" Content="Back" HorizontalAlignment="Left" Margin="811,10,0,0" VerticalAlignment="Top" Height="23" Width="42" Click="btnBack_Click" RenderTransformOrigin="0.721,0.38"/>
+                    <!-- Action Buttons -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                        <Button x:Name="btnCreate" Content="➕ Create" Style="{StaticResource SuccessButtonStyle}" Click="btnCreate_Click"/>
+                        <Button x:Name="btnUpdate" Content="✏️ Update" Style="{StaticResource WarningButtonStyle}" Click="btnUpdate_Click"/>
+                        <Button x:Name="btnDelete" Content="🗑️ Delete" Style="{StaticResource DeleteButtonStyle}" Click="btnDelete_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Right Panel - Order Details Form -->
+            <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Form Title -->
+                    <TextBlock Grid.Row="0" Text="Order Details" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+
+                    <!-- Form Fields -->
+                    <StackPanel Grid.Row="1">
+                        <!-- Customer -->
+                        <TextBlock Text="Customer" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="cboCustomer" Style="{StaticResource ModernComboBoxStyle}" Height="35" DisplayMemberPath="CompanyName" SelectedValuePath="CustomerId"/>
+
+                        <!-- Employee -->
+                        <TextBlock Text="Employee" FontWeight="SemiBold" Margin="0,15,0,5"/>
+                        <TextBlock x:Name="txtEmployeeName" FontSize="12" Margin="0,0,0,10"/>
+
+                        <!-- Order Date -->
+                        <TextBlock Text="Order Date" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <DatePicker x:Name="dpOrderDate" Height="35" Margin="0,0,0,10"/>
+
+                        <!-- Product and Quantity -->
+                        <TextBlock Text="Add Product" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox x:Name="cboProduct" Style="{StaticResource ModernComboBoxStyle}" Width="200" Height="35" DisplayMemberPath="ProductName" SelectedValuePath="ProductId"/>
+                            <TextBox x:Name="txtQuantity" Style="{StaticResource ModernTextBoxStyle}" Width="80" Height="35" Margin="10,0,0,0"/>
+                            <Button x:Name="btnAddProduct" Content="Add" Style="{StaticResource ModernButtonStyle}" Margin="10,0,0,0" Click="btnAddProduct_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Order Details ListView -->
+                    <ListView x:Name="lvOrderDetails" Grid.Row="2" Style="{StaticResource ModernListViewStyle}" Margin="0,20,0,0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Product" Width="150" DisplayMemberBinding="{Binding ProductName}"/>
+                                <GridViewColumn Header="Quantity" Width="70" DisplayMemberBinding="{Binding Quantity}"/>
+                                <GridViewColumn Header="Unit Price" Width="90" DisplayMemberBinding="{Binding UnitPrice}"/>
+                                <GridViewColumn Header="Total Price" Width="100" DisplayMemberBinding="{Binding TotalPrice}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Welcome Text (Hidden - kept for compatibility) -->
+        <TextBlock x:Name="txtWelcome" Text="Welcome" Visibility="Hidden"/>
     </Grid>
 </Window>

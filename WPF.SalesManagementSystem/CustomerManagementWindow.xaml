@@ -5,50 +5,342 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.SalesManagementSystem"
         mc:Ignorable="d"
-        Title="Customer Management" Height="450" Width="800">
+        Title="Customer Management" 
+        Height="700" 
+        Width="1200"
+        WindowStartupLocation="CenterScreen"
+        Background="#F8F9FA">
+
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4A90E2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#357ABD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2E6BA8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Delete Button Style -->
+        <Style x:Key="DeleteButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#A93226"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Success Button Style -->
+        <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#229954"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1E8449"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Warning Button Style -->
+        <Style x:Key="WarningButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#F39C12"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E67E22"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D35400"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#E0E0E0" 
+                                    Direction="270" 
+                                    ShadowDepth="2" 
+                                    BlurRadius="8" 
+                                    Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern TextBox Style -->
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#4A90E2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ListView Style -->
+        <Style x:Key="ModernListViewStyle" TargetType="ListView">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E8E8E8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <TextBlock x:Name="txtWelcome" HorizontalAlignment="Left" Margin="478,322,0,0" TextWrapping="Wrap" Text="Welcome" VerticalAlignment="Top" FontSize="20" Foreground="#FFCC3863"/>
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50">
+            <Grid>
+                <StackPanel Orientation="Horizontal" 
+                           VerticalAlignment="Center" 
+                           Margin="20,0">
+                    <TextBlock Text="👥" FontSize="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="Customer Management" 
+                             FontSize="24" 
+                             FontWeight="Bold" 
+                             Foreground="White" 
+                             VerticalAlignment="Center"/>
+                </StackPanel>
 
-        <ListView x:Name="lvCustomer" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="34,35,40,250" SelectionChanged="lvCustomer_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID"
-                                    Width="30"
-                                    DisplayMemberBinding="{Binding CustomerId}"/>
-                    <GridViewColumn Header="Company Name"
-                                    DisplayMemberBinding="{Binding CompanyName}"/>
-                    <GridViewColumn Header="Contact Name"
-                                    DisplayMemberBinding="{Binding ContactName}"/>
-                    <GridViewColumn Header="Contact Title"
-                                    DisplayMemberBinding="{Binding ContactTitle}"/>
-                    <GridViewColumn Header="Address"
-                                    DisplayMemberBinding="{Binding Address}"/>
-                    <GridViewColumn Header="Phone"
-                                    DisplayMemberBinding="{Binding Phone}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                <Button x:Name="btnBack" 
+                       Content="← Back to Dashboard" 
+                       Style="{StaticResource ModernButtonStyle}"
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Center" 
+                       Margin="0,0,20,0"
+                       Click="btnBack_Click"/>
+            </Grid>
+        </Border>
 
-        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="163,366,0,0" VerticalAlignment="Top" Click="btnCreate_Click"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="218,366,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,-0.163" Click="btnUpdate_Click"/>
-        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="697,197,0,0" VerticalAlignment="Top" Click="btnDelete_Click"/>
-        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="65,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="376" Height="20"/>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="458,10,0,0" VerticalAlignment="Top" Click="btnSearch_Click"/>
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Content="Company Name:" HorizontalAlignment="Left" Margin="39,194,0,0" VerticalAlignment="Top"/>
-        <Label Content="Contact Name:" HorizontalAlignment="Left" Margin="39,225,0,0" VerticalAlignment="Top"/>
-        <Label Content="Contact Title:" HorizontalAlignment="Left" Margin="39,256,0,0" VerticalAlignment="Top"/>
-        <Label Content="Address:" HorizontalAlignment="Left" Margin="39,287,0,0" VerticalAlignment="Top"/>
-        <Label Content="Phone:" HorizontalAlignment="Left" Margin="39,318,0,0" VerticalAlignment="Top"/>
+            <!-- Left Panel - Customer List -->
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-        <TextBox x:Name="txtCompanyName" HorizontalAlignment="Left" Margin="141,198,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
-        <TextBox x:Name="txtContactName" HorizontalAlignment="Left" Margin="141,229,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
-        <TextBox x:Name="txtContactTitle" HorizontalAlignment="Left" Margin="141,260,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
-        <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Margin="141,291,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
-        <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Margin="141,322,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="162"/>
+                    <!-- Title -->
+                    <TextBlock Grid.Row="0" 
+                             Text="Customer List" 
+                             FontSize="18" 
+                             FontWeight="Bold" 
+                             Margin="0,0,0,15"/>
 
-        <Button x:Name="btnBack" Content="Back" HorizontalAlignment="Left" Margin="488,260,0,0" VerticalAlignment="Top" Height="33" Width="61" Click="btnBack_Click"/>
-        
+                    <!-- Search Section -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
+                        <TextBox x:Name="txtSearch" 
+                               Style="{StaticResource ModernTextBoxStyle}"
+                               Width="300" 
+                               Height="35"
+                               VerticalContentAlignment="Center"
+                               FontSize="12"
+                               Text="Search by name, company, or phone..."/>
+                        <Button x:Name="btnSearch" 
+                              Content="🔍 Search" 
+                              Style="{StaticResource ModernButtonStyle}"
+                              Height="35"
+                              Margin="10,0,0,0"
+                              Click="btnSearch_Click"/>
+                    </StackPanel>
+
+                    <!-- Customer ListView -->
+                    <ListView x:Name="lvCustomer" 
+                            Grid.Row="2"
+                            Style="{StaticResource ModernListViewStyle}"
+                            SelectionChanged="lvCustomer_SelectionChanged"
+                            d:ItemsSource="{d:SampleData ItemCount=5}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding CustomerId}"/>
+                                <GridViewColumn Header="Company Name" Width="180" DisplayMemberBinding="{Binding CompanyName}"/>
+                                <GridViewColumn Header="Contact Name" Width="150" DisplayMemberBinding="{Binding ContactName}"/>
+                                <GridViewColumn Header="Contact Title" Width="120" DisplayMemberBinding="{Binding ContactTitle}"/>
+                                <GridViewColumn Header="Address" Width="200" DisplayMemberBinding="{Binding Address}"/>
+                                <GridViewColumn Header="Phone" Width="120" DisplayMemberBinding="{Binding Phone}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Grid.Row="3" 
+                              Orientation="Horizontal" 
+                              HorizontalAlignment="Center" 
+                              Margin="0,15,0,0">
+                        <Button x:Name="btnCreate" 
+                              Content="👤 Add Customer" 
+                              Style="{StaticResource SuccessButtonStyle}"
+                              Click="btnCreate_Click"/>
+                        <Button x:Name="btnUpdate" 
+                              Content="✏️ Update" 
+                              Style="{StaticResource WarningButtonStyle}"
+                              Click="btnUpdate_Click"/>
+                        <Button x:Name="btnDelete" 
+                              Content="🗑️ Delete" 
+                              Style="{StaticResource DeleteButtonStyle}"
+                              Click="btnDelete_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Right Panel - Customer Details Form -->
+            <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Form Title -->
+                    <TextBlock Grid.Row="0" 
+                             Text="Customer Details" 
+                             FontSize="18" 
+                             FontWeight="Bold" 
+                             Margin="0,0,0,20"/>
+
+                    <!-- Form Fields -->
+                    <StackPanel Grid.Row="1">
+                        <!-- Company Name -->
+                        <TextBlock Text="Company Name" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtCompanyName" 
+                               Style="{StaticResource ModernTextBoxStyle}"
+                               Height="35"/>
+
+                        <!-- Contact Name -->
+                        <TextBlock Text="Contact Name" FontWeight="SemiBold" Margin="0,15,0,5"/>
+                        <TextBox x:Name="txtContactName" 
+                               Style="{StaticResource ModernTextBoxStyle}"
+                               Height="35"/>
+
+                        <!-- Contact Title -->
+                        <TextBlock Text="Contact Title" FontWeight="SemiBold" Margin="0,15,0,5"/>
+                        <TextBox x:Name="txtContactTitle" 
+                               Style="{StaticResource ModernTextBoxStyle}"
+                               Height="35"/>
+
+                        <!-- Address -->
+                        <TextBlock Text="Address" FontWeight="SemiBold" Margin="0,15,0,5"/>
+                        <TextBox x:Name="txtAddress" 
+                               Style="{StaticResource ModernTextBoxStyle}"
+                               Height="60"
+                               TextWrapping="Wrap"
+                               AcceptsReturn="True"
+                               VerticalScrollBarVisibility="Auto"/>
+
+                        <!-- Phone -->
+                        <TextBlock Text="Phone Number" FontWeight="SemiBold" Margin="0,15,0,5"/>
+                        <TextBox x:Name="txtPhone" 
+                               Style="{StaticResource ModernTextBoxStyle}"
+                               Height="35"/>
+                    </StackPanel>
+
+                    <!-- Customer Stats -->
+                    <Border Grid.Row="2" 
+                          Background="#F8F9FA" 
+                          CornerRadius="8" 
+                          Padding="15" 
+                          Margin="0,20,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Customer Statistics" FontWeight="Bold" FontSize="14" Margin="0,0,0,10"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="👥" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="Total Customers:" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="89" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" Foreground="#4A90E2"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="📈" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="Active This Month:" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="67" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" Foreground="#27AE60"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="🆕" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="New This Week:" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="5" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" Foreground="#F39C12"/>
+                            </StackPanel>
+
+                            <Separator Margin="0,10"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="🏆" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="VIP Customers:" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="12" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" Foreground="#9B59B6"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Welcome Text (Hidden - kept for compatibility) -->
+        <TextBlock x:Name="txtWelcome" 
+                 Text="Welcome" 
+                 Visibility="Hidden"/>
     </Grid>
 </Window>

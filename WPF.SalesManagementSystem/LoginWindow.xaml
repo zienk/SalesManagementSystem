@@ -246,7 +246,8 @@
                                      Margin="0,0,0,8"/>
                             <PasswordBox x:Name="txtPassword" 
                                        Grid.Row="6"
-                                       Style="{StaticResource ModernPasswordBoxStyle}"/>
+                                       Style="{StaticResource ModernPasswordBoxStyle}"
+                                       Padding="0"/>
 
                             <!-- Login and Exit Buttons -->
                             <Grid Grid.Row="8">

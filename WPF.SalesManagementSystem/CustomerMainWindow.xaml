@@ -5,42 +5,252 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.SalesManagementSystem"
         mc:Ignorable="d"
-        Title="Customer Portal" Height="515" Width="1197">
-    <Grid Margin="0,0,10,0">
-        <TextBlock x:Name="txtWelcome" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Welcome" VerticalAlignment="Top" FontSize="20" Foreground="#FFCC3863"/>
-        <Button x:Name="btnViewOrders" Content="View Order History" HorizontalAlignment="Left" Margin="19,54,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnViewOrders_Click"/>
-        <Button x:Name="btnEditProfile" Content="Edit Profile" HorizontalAlignment="Left" Margin="19,141,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnEditProfile_Click"/>
-        <Button x:Name="btnLogout" Content="Logout" HorizontalAlignment="Left" Margin="19,228,0,0" VerticalAlignment="Top" Height="57" Width="184" Click="btnLogout_Click"/>
+        Title="Customer Portal" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F6FA">
 
-        <ListView x:Name="lvOrders" Visibility="Collapsed" Margin="250,54,40,100">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Order ID" Width="80" DisplayMemberBinding="{Binding OrderId}"/>
-                    <GridViewColumn Header="Product" Width="200" DisplayMemberBinding="{Binding Product.ProductName}"/>
-                    <GridViewColumn Header="Quantity" Width="80" DisplayMemberBinding="{Binding Quantity}"/>
-                    <GridViewColumn Header="TotalPrice" Width="80" DisplayMemberBinding="{Binding TotalPrice}"/>
-                    <GridViewColumn Header="Order Date" Width="150" DisplayMemberBinding="{Binding Order.OrderDate}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4A90E2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#357ABD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2E6BA8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-        <Grid x:Name="gridProfile" Visibility="Collapsed" Margin="250,54,40,100">
-            <Label Content="Company Name:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtCompanyName" HorizontalAlignment="Left" Margin="120,24,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <!-- Success Button Style -->
+        <Style x:Key="SuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#229954"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1E8449"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-            <Label Content="Contact Name:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtContactName" HorizontalAlignment="Left" Margin="120,64,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <!-- Logout Button Style -->
+        <Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C0392B"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#A93226"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-            <Label Content="Contact Title:" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtContactTitle" HorizontalAlignment="Left" Margin="120,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <!-- Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#E0E0E0" 
+                                    Direction="270" 
+                                    ShadowDepth="3" 
+                                    BlurRadius="10" 
+                                    Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <Label Content="Address:" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Margin="120,144,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <!-- Modern TextBox Style -->
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#4A90E2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <Label Content="Phone:" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Margin="120,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
+        <!-- Modern ListView Style -->
+        <Style x:Key="ModernListViewStyle" TargetType="ListView">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E8E8E8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </Window.Resources>
 
-            <Button x:Name="btnSaveProfile" Content="Save Changes" HorizontalAlignment="Left" Margin="120,224,0,0" VerticalAlignment="Top" Width="100" Click="btnSaveProfile_Click"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50">
+            <Grid>
+                <TextBlock Text="Customer Portal" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center" 
+                          Margin="30,0,0,0"
+                          FontSize="24" 
+                          FontWeight="Bold"
+                          Foreground="White"/>
+
+                <StackPanel Orientation="Horizontal" 
+                          HorizontalAlignment="Right" 
+                          VerticalAlignment="Center" 
+                          Margin="0,0,30,0">
+                    <TextBlock x:Name="txtWelcome" 
+                             Text="Welcome, Customer" 
+                             Foreground="#BDC3C7" 
+                             FontSize="14" 
+                             VerticalAlignment="Center" 
+                             Margin="0,0,15,0"/>
+                    <Ellipse Width="40" Height="40" Fill="#4A90E2">
+                        <Ellipse.Effect>
+                            <DropShadowEffect Color="Black" BlurRadius="5" Opacity="0.2"/>
+                        </Ellipse.Effect>
+                    </Ellipse>
+                    <TextBlock Text="C" 
+                             HorizontalAlignment="Center" 
+                             VerticalAlignment="Center" 
+                             Foreground="White" 
+                             FontSize="16" 
+                             FontWeight="Bold" 
+                             Margin="-32,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel - Navigation -->
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <StackPanel Margin="15">
+                    <Button x:Name="btnViewOrders" 
+                          Content="📜 View Order History" 
+                          Style="{StaticResource ModernButtonStyle}"
+                          Height="50" 
+                          Click="btnViewOrders_Click"/>
+                    <Button x:Name="btnEditProfile" 
+                          Content="✏️ Edit Profile" 
+                          Style="{StaticResource ModernButtonStyle}"
+                          Height="50" 
+                          Click="btnEditProfile_Click"/>
+                    <Button x:Name="btnLogout" 
+                          Content="🚪 Logout" 
+                          Style="{StaticResource LogoutButtonStyle}"
+                          Height="50" 
+                          Click="btnLogout_Click"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Right Panel - Content -->
+            <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Content Title -->
+                    <TextBlock Grid.Row="0" 
+                             Text="Customer Dashboard" 
+                             FontSize="18" 
+                             FontWeight="Bold" 
+                             Margin="15,15,15,10"/>
+
+                    <!-- Order History -->
+                    <ListView x:Name="lvOrders" 
+                            Grid.Row="1" 
+                            Style="{StaticResource ModernListViewStyle}" 
+                            Visibility="Collapsed" 
+                            Margin="15">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Order ID" Width="80" DisplayMemberBinding="{Binding OrderId}"/>
+                                <GridViewColumn Header="Product" Width="200" DisplayMemberBinding="{Binding Product.ProductName}"/>
+                                <GridViewColumn Header="Quantity" Width="80" DisplayMemberBinding="{Binding Quantity}"/>
+                                <GridViewColumn Header="Total Price" Width="100" DisplayMemberBinding="{Binding TotalPrice}"/>
+                                <GridViewColumn Header="Order Date" Width="150" DisplayMemberBinding="{Binding Order.OrderDate}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <!-- Profile Edit Form -->
+                    <Grid x:Name="gridProfile" Grid.Row="1" Visibility="Collapsed" Margin="15">
+                        <StackPanel>
+                            <TextBlock Text="Company Name" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtCompanyName" Style="{StaticResource ModernTextBoxStyle}" Height="35" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Contact Name" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtContactName" Style="{StaticResource ModernTextBoxStyle}" Height="35" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Contact Title" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtContactTitle" Style="{StaticResource ModernTextBoxStyle}" Height="35" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Address" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtAddress" Style="{StaticResource ModernTextBoxStyle}" Height="35" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Phone" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtPhone" Style="{StaticResource ModernTextBoxStyle}" Height="35" Margin="0,0,0,10"/>
+
+                            <Button x:Name="btnSaveProfile" 
+                                  Content="Save Changes" 
+                                  Style="{StaticResource SuccessButtonStyle}"
+                                  Height="40" 
+                                  Margin="0,10,0,0" 
+                                  Click="btnSaveProfile_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>
