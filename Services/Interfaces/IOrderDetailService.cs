@@ -9,9 +9,9 @@ namespace Services.Interfaces
 {
     public interface IOrderDetailService
     {
-        public List<OrderDetail> GetAllOrderDetails();
-        public List<OrderDetail> GetOrderDetailsByOrderId(int orderId);
-        public List<OrderDetail> GetOrderDetailsByCustomerId(int customerID);
-        public bool CreateOrderDetail(OrderDetail orderDetail);
+        List<OrderDetail> GetAllOrderDetails();
+        List<OrderDetail> GetOrderDetailsByOrderId(int orderId);
+        List<OrderDetail> GetOrderDetailsByCustomerId(int customerID);
+        bool CreateOrderDetail(OrderDetail orderDetail);
     }
 }

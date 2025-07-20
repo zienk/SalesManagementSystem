@@ -9,15 +9,15 @@ namespace Services.Interfaces
 {
     public interface IOrderService
     {
-        public List<Order> GetAllOrders();
-        public Order? GetOrderById(int orderId);
-        public List<Order>? GetOrdersByCustomerId(int customerId);
-        public bool CreateOrder(Order order);
-        public bool UpdateOrder(Order order);
-        public bool DeleteOrder(int orderId);
-        public List<Order> SearchOrders(string searchText);
-        public List<Order> GetOrdersByEmployeeId(int employeeId);
-        public List<Order> SearchOrdersByEmployeeId(string searchText, int employeeId);
-        public Order? GetLastOrderOfEmployee(int employeeId, int customerId);
+        List<Order> GetAllOrders();
+        Order? GetOrderById(int orderId);
+        List<Order>? GetOrdersByCustomerId(int customerId);
+        bool CreateOrder(Order order);
+        bool UpdateOrder(Order order);
+        bool DeleteOrder(int orderId);
+        List<Order> SearchOrders(string searchText);
+        List<Order> GetOrdersByEmployeeId(int employeeId);
+        List<Order> SearchOrdersByEmployeeId(string searchText, int employeeId);
+        Order? GetLastOrderOfEmployee(int employeeId, int customerId);
     }
 }

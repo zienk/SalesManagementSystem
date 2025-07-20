@@ -9,7 +9,7 @@ namespace Services.Interfaces
 {
     public interface IEmployeeService
     {
-        public Employee? GetEmployee(string username, string password);
-        public List<Employee> GetAllEmployees();
+        Employee? GetEmployee(string username, string password);
+        List<Employee> GetAllEmployees();
     }
 }
